@@ -208,6 +208,6 @@ function checkFoodCollisions(snakeHeadX, snakeHeadY) {
    }
    
    function centerMenuPosition(menu) {
-       menu.style.top = (screenHeight / 2) + "px";
-       menu.style.left = (screenWidth / 2) + "px";
+       menu.style.top = (screenHeight / 2) - (menu.offsetHeight / 2) +"px";
+       menu.style.left = (screenWidth / 2) - (menu.offsetWidth / 2)+ "px";
    }
