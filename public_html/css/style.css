@@ -6,3 +6,28 @@ body {
 #game-screen {
     display: block;
 }
+
+#gameOver {
+    position: absolute;
+    visibility: hidden;
+}
+
+h1, h3 {
+    font-family:'Permanent', cursive;
+    color: white;
+    text-align: center;
+}
+
+.title {
+    font-size: 62px;
+    margin-bottom: 0;
+}
+
+#restartButton {
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+#restartButton:hover {
+    background-color: #009900;
+}

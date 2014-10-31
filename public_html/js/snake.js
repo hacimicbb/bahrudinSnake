@@ -14,6 +14,9 @@ var context;
 var screenWidth;
 var screenHeight;
 
+var gamestate;
+var gameOverMenu;
+
 /* ----------------------------------------------------------------------------------------
  * Executing Game Code
  * ----------------------------------------------------------------------------------------
@@ -40,13 +43,21 @@ function gameInitialize() {
     canvas.height = screenHeight;
     
     document.addEventListener("keydown", keyboardHandler );
+    
+    gameOverMenu = document.getElementById("gameOver");
+    centerMenuposition(gameOverMenu);
+    
+    
+    setState("PLAY");
 }
 
 function gameLoop() {
     gameDraw();
+    if(gamestate == "PLAY") {
     snakeUpdate();
     snakeDraw();
     foodDraw();
+   }
 }
 
 function gameDraw() {
@@ -87,11 +98,12 @@ function snakeUpdate () {
     if(snakeDirection == "down") {
         snakeHeadY++;
     }    
-    else if (snakeDirection = "right"){
+    else if (snakeDirection == "right"){
         snakeHeadX++;
     }
    
    checkFoodCollisions(snakeHeadX, snakeHeadY);
+   checkWallCollisions(snakeHeadX, snakeHeadY);
    
     var snakeTail = snake.pop();
     snakeTail.x = snakeHeadX;
@@ -137,7 +149,7 @@ function keyboardHandler(event){
         snakeDirection = "right";
     }
     else if(event.keyCode == "40" && snakeDirection != "up") {
-        snakeDirection = "down"
+        snakeDirection = "down";
     }
 }
 
@@ -162,7 +174,40 @@ function keyboardHandler(event){
 
 function checkFoodCollisions(snakeHeadX, snakeHeadY) {
     if(snakeHeadX == food.x && snakeHeadY == food.y) {
-        console.log("Food Collision");
-    }
-    
-}
+        snake.push({
+            x: 0,
+            y: 0
+          });
+          snakeLength++;
+        }
+   }
+   
+   function checkWallCollisions(snakeHeadX, snakeHeadY){
+       if(snakeHeadX * snakeSize >= screenwidth || snakeHeadY * snakeSize < 0){
+           setState("GAME OVER");
+         }
+   }
+   
+   /* ----------------------------------------------------------------------------------------
+    * Game State Handling
+    * ----------------------------------------------------------------------------------------
+    */
+   
+   function setState(state){
+       gameState = state;
+   }
+   
+   function displayMenu(menu) {
+       menu.style.visibility = "visible";
+   }
+   
+   function showMenu(state) {
+       if(state == "GAME OVER") {
+           displayMenu(gameOverMenu);
+       }
+   }
+   
+   function centerMenuPosition(menu) {
+       menu.style.top = (screenHeight / 2) + "px";
+       menu.style.left = (screenWidth / 2) + "px";
+   }
