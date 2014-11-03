@@ -74,7 +74,7 @@ function gameRestart() {
     snakeInitialize();
     foodInitialize();
     setState("PLAY");
-    hide(gameOverMenu);
+    hideMenu(gameOverMenu);
 }
 
 /* -----------------------------------------------------------------------------------------
